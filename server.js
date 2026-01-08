@@ -68,8 +68,8 @@ app.put('/editsports', async(req, res) => {
 })
 
 
-app.delete('/deletesports', async(req, res) => {
-    const { sports_id, sports_name, sports_pic } = req.body;
+app.delete('/deletesports/:id', async(req, res) => {
+    const sports_id = req.params.id;
 
     if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
 
@@ -87,6 +87,5 @@ app.delete('/deletesports', async(req, res) => {
         res.status(500).json({ message: 'Server error - could not delete sport '+sports_name})
     }
 })
-
 
 
