@@ -49,7 +49,7 @@ app.post('/addsports', async(req, res) => {
 
 
 
-app.post('/editsports', async(req, res) => {
+app.put('/editsports', async(req, res) => {
     const { sports_id, sports_name, sports_pic } = req.body;
 
     if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
