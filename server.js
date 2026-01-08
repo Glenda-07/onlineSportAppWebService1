@@ -48,8 +48,11 @@ app.post('/addsports', async(req, res) => {
 })
 
 
+
 app.post('/editsports', async(req, res) => {
     const { sports_id, sports_name, sports_pic } = req.body;
+
+    if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
     
     try {
         let connection = await mysql.createConnection(dbConfig);
@@ -65,3 +68,4 @@ app.post('/editsports', async(req, res) => {
         res.status(500).json({ message: 'Server error - could not edit sport '+sports_name})
     }
 })
+
