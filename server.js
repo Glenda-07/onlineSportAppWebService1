@@ -47,16 +47,21 @@ app.post('/addsports', async(req, res) => {
     }
 })
 
-//
-// app.post('/editsports', async(req, res) => {
-//     const { sports_name, sports_pic } = req.body;
-//     try {
-//         let connection = await mysql.createConnection(dbConfig);
-//         await connection.execute('INSERT INTO sports (sports_name, sports_pic) VALUES (?,?)', [sports_name, sports_pic]);
-            //await connection.execute('UPDATE sports SET sports_name = ')
-//         res.status(201).json({message: 'Sport: '+ sports_name +' added successfully'});
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: 'Server error - could not add sport '+sports_name})
-//     }
-// })
+
+app.post('/editsports', async(req, res) => {
+    const { sports_id, sports_name, sports_pic } = req.body;
+    
+    try {
+        let connection = await mysql.createConnection(dbConfig);
+        await connection.execute(
+            'UPDATE sports SET sports_name = ?, sports_pic = ? WHERE sports_id = ?',
+            [sports_name, sports_pic,sports_id]
+        );
+        await connection.end();
+
+        res.status(200).json({message: 'Sport: '+ sports_name +' edited successfully'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error - could not edit sport '+sports_name})
+    }
+})
