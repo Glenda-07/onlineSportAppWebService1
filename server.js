@@ -47,8 +47,6 @@ app.post('/addsports', async(req, res) => {
     }
 })
 
-
-
 app.put('/editsports', async(req, res) => {
     const { sports_id, sports_name, sports_pic } = req.body;
 
@@ -68,4 +66,27 @@ app.put('/editsports', async(req, res) => {
         res.status(500).json({ message: 'Server error - could not edit sport '+sports_name})
     }
 })
+
+
+app.delete('/deletesports', async(req, res) => {
+    const { sports_id, sports_name, sports_pic } = req.body;
+
+    if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
+
+    try {
+        let connection = await mysql.createConnection(dbConfig);
+        await connection.execute(
+            'DELETE FROM sports WHERE sports_id = ?',
+            [sports_id]
+        );
+        await connection.end();
+
+        res.status(200).json({message: 'Sport: '+ sports_name +' deleted successfully'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error - could not delete sport '+sports_name})
+    }
+})
+
+
 
