@@ -36,14 +36,14 @@ app.get('/allsports',async (req,res)=>{
 });
 
 app.post('/addsports', async(req, res) => {
-    const { sport_name, sport_pic } = req.body;
+    const { sports_name, sports_pic } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO sports (sport_name, sport_pic) VALUES (?,?)', [sport_name, sport_pic]);
-        res.status(201).json({message: 'Sport: '+ sport_name +' added successfully'});
+        await connection.execute('INSERT INTO sports (sports_name, sports_pic) VALUES (?,?)', [sports_name, sports_pic]);
+        res.status(201).json({message: 'Sport: '+ sports_name +' added successfully'});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error - could not add sport '+sport_name})
+        res.status(500).json({ message: 'Server error - could not add sport '+sports_name})
     }
 })
 
