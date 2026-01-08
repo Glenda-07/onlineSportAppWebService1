@@ -67,7 +67,6 @@ app.put('/editsports', async(req, res) => {
     }
 })
 
-
 app.delete('/deletesports/:id', async(req, res) => {
     const sports_id = req.params.id;
 
@@ -81,10 +80,10 @@ app.delete('/deletesports/:id', async(req, res) => {
         );
         await connection.end();
 
-        res.status(200).json({message: 'Sport: '+ sports_name +' deleted successfully'});
+        res.status(200).json({ message: 'Sport with ID '+ sports_id +' deleted successfully' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error - could not delete sport '+sports_name})
+        res.status(500).json({ message: 'Server error - could not delete sport with ID: '+ sports_id})
     }
 })
 
