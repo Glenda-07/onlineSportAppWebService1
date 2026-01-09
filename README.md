@@ -8,10 +8,10 @@ Add sport:
 https://onlinesportappwebservice1.onrender.com/addsports 
 {"sports_name":"basketball", "sports_pic":"file:///C:/Users/bearv/Downloads/horserat-Qd_r2iRHRCE-unsplash.jpg"}
 
-Update/edit sport: 
+Update/edit sport using PUT: 
 https://onlinesportappwebservice1.onrender.com/editsports 
 {"sports_id":7, "sports_name":"football", "sports_pic":"file:///C:/Users/bearv/Desktop/Sem%204/C346%20Mobile%20App%20Development/app%20imgs/photo-1621998014874-a6edfb5f9bc7.jpg"}
 
-Delete sport: 
+Delete sport using GET: 
 https://onlinesportappwebservice1.onrender.com/deletesports/7 
 {"sports_id": 7}
