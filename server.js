@@ -67,7 +67,7 @@ app.put('/editsports', async(req, res) => {
     }
 })
 
-app.delete('/deletesports/:id', async(req, res) => {
+app.get('/deletesports/:id', async(req, res) => {
     const sports_id = req.params.id;
 
     if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
