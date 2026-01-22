@@ -28,6 +28,7 @@ app.get('/allsports',async (req,res)=>{
     try {
         let connection = await mysql.createConnection(dbConfig);
         const [rows] = await connection.execute('SELECT * FROM sports');
+        await connection.end();
         res.json(rows);
     } catch(err){
         res.status(500).json({message:'Server error for all sports'
@@ -36,10 +37,12 @@ app.get('/allsports',async (req,res)=>{
 });
 
 app.post('/addsports', async(req, res) => {
-    const { sports_name, sports_pic } = req.body;
+    const { sports_name, sports_pic, sports_description } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO sports (sports_name, sports_pic) VALUES (?,?)', [sports_name, sports_pic]);
+        await connection.execute('INSERT INTO sports (sports_name, sports_pic,sports_description) VALUES (?,?,?)', [sports_name, sports_pic, sports_description]);
+        await connection.end();
+
         res.status(201).json({message: 'Sport: '+ sports_name +' added successfully'});
     } catch (err) {
         console.error(err);
@@ -47,16 +50,17 @@ app.post('/addsports', async(req, res) => {
     }
 })
 
+
 app.put('/editsports', async(req, res) => {
-    const { sports_id, sports_name, sports_pic } = req.body;
+    const { sports_id, sports_name, sports_pic, sports_description } = req.body;
 
     if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
-    
+
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute(
-            'UPDATE sports SET sports_name = ?, sports_pic = ? WHERE sports_id = ?',
-            [sports_name, sports_pic,sports_id]
+            'UPDATE sports SET sports_name = ?, sports_pic = ?, sports_description = ? WHERE sports_id = ?',
+            [sports_name, sports_pic, sports_description,sports_id]
         );
         await connection.end();
 
@@ -67,7 +71,8 @@ app.put('/editsports', async(req, res) => {
     }
 })
 
-app.get('/deletesports/:id', async(req, res) => {
+
+app.delete('/deletesports/:id', async(req, res) => {
     const sports_id = req.params.id;
 
     if (!sports_id) { return res.status(400).json({ message: 'Missing sports id' }); }
